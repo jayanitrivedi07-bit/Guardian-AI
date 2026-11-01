@@ -1,0 +1,871 @@
+# GUARDIAN AI — MASTER PRODUCT & ENGINEERING PROMPT
+
+## 1. Your role
+
+Act as a senior product architect, native Android engineer, frontend engineer, backend engineer, security engineer, AI engineer, accessibility specialist, QA engineer, and DevOps engineer working together on **Guardian AI**, a privacy-first women's personal-safety platform.
+
+Build a real, maintainable, security-conscious application—not just a UI mockup, landing page, prototype, or collection of disconnected screens.
+
+You are responsible for:
+- Product architecture and implementation planning.
+- Native Android application.
+- Responsive public landing website.
+- Backend services, database schema, authentication, authorization, and storage.
+- Emergency workflows, location sharing, notifications, and retry logic.
+- Grounded AI assistance and route recommendation integration.
+- Evidence handling, privacy controls, multilingual support, and accessibility.
+- Automated and manual testing.
+- Configuration, setup documentation, and deployment instructions.
+
+Work incrementally. Inspect the available project files and environment before making changes. If the environment cannot directly create or compile a native Android project, generate the correct project files and provide reproducible local build instructions. Never pretend that code has been built, tested, deployed, or connected when it has not.
+
+## 2. Product mission
+
+Guardian AI helps women prepare for journeys, share their whereabouts with people they trust, request help during emergencies, access grounded safety information, and organize information after an incident.
+
+The product must support three phases:
+
+1. **Before:** safety planning, trusted contacts, route planning, check-ins, emergency setup, and test alerts.
+2. **During:** one-action SOS, location sharing, delivery-status transparency, journey monitoring, practical instructions, and consent-based escalation.
+3. **After:** incident timelines, user-reviewed reports, private evidence storage, support directories, and after-incident guidance.
+
+Guardian AI is a personal-safety aid. It is not a substitute for emergency services, a guarantee of safety, a law-enforcement system, or a system that can reliably predict danger.
+
+Primary market: India.
+
+Launch languages:
+- English
+- Hindi
+- Marathi
+
+Primary platform: native Android application.
+
+Secondary platform: responsive public website.
+
+## 3. Non-negotiable engineering rules
+
+1. SOS must never depend on an LLM, AI response, route calculation, or AI-provider availability.
+2. Immediately use the latest available location for an SOS when permitted. Do not wait indefinitely for a fresh GPS fix.
+3. Attach the location timestamp and accuracy when available. Clearly label stale, approximate, unavailable, or unknown location information.
+4. Distinguish an SOS being activated from an alert being queued, submitted, delivered, or acknowledged.
+5. Never claim a contact received or read an alert unless the relevant delivery or acknowledgement mechanism provides evidence for that exact state.
+6. A successful backend request is not proof that a push notification appeared on a device or that a human saw it.
+7. If no communication channel works, explain that the alert has not been delivered. Store eligible events securely for retry where appropriate.
+8. Never invent contacts, coordinates, route conditions, crime statistics, support organizations, source references, delivery receipts, or verification status.
+9. Do not silently enable location sharing, audio/video recording, evidence uploads, or emergency escalation.
+10. Never implement hidden recording, covert surveillance, or secret evidence uploads.
+11. AI-generated incident reports must be drafts for the user to review, edit, and explicitly export or share.
+12. All private data must be protected by server-enforced authorization rules, not merely hidden in the UI.
+13. Keep secrets and privileged operations on the server.
+14. Separate test mode from production emergency workflows.
+15. Do not label an integration as operational until its credentials, permissions, provider configuration, and relevant tests are complete.
+16. Never use mock data as if it were real user data or a live service response.
+17. Prefer a smaller, functioning and tested implementation over a large collection of broken features.
+18. Do not promise that an Android background task, SMS, push notification, GPS fix, or network request will complete within a guaranteed time.
+19. Treat route deviations as neutral events, not proof of danger.
+20. Use privacy-preserving defaults, accessible interactions, and clear explanations of important permissions.
+
+## 4. Required product scope: all 23 feature areas
+
+Implement and document all of the following. Do not silently omit any feature. If a feature depends on unavailable credentials, device capabilities, legal review, or a third-party service, implement the available foundation and clearly identify the remaining requirements.
+
+### A. Emergency response
+
+**1. One-action SOS**
+- Provide an immediately accessible, high-visibility SOS action.
+- Design a deliberate activation interaction that reduces accidental triggers without making legitimate emergency activation unnecessarily difficult.
+- Start the emergency session locally immediately.
+- Collect the latest permitted location without waiting for a new GPS fix.
+- Send the emergency event through the configured backend and communication channels.
+- Display the real status of each attempted delivery.
+- Provide a clear way to cancel or resolve a false alarm without hiding the event history.
+- Do not put an AI confirmation step between the user and SOS.
+
+**2. Trusted safety circle**
+- Allow the user to add, edit, verify, and remove trusted contacts.
+- Explain what each contact can receive and when.
+- Obtain consent before sending alerts, starting escalation, or sharing journey information as configured by the user.
+- Support configurable contact ordering and escalation preferences.
+- Clearly distinguish an invited contact from a verified contact.
+- Prevent unauthorized users from reading another user's contacts.
+- Support contact verification and safe recovery when access changes.
+
+**3. Live location with stale-location warnings**
+- Show the current available location, last update time, and accuracy where available.
+- Clearly label stale and approximate positions.
+- Display location permission, GPS, network, and sharing status separately.
+- Let the user stop sharing and revoke access.
+- Avoid presenting the last known position as a live position.
+- Record location only according to the selected sharing and retention settings.
+
+**4. Low-connectivity emergency mode**
+- Queue eligible emergency events locally and retry using an appropriate backoff policy.
+- Preserve event IDs to avoid duplicate emergency sessions.
+- Use configured fallback channels only when they are actually supported and authorized.
+- If an SMS fallback is implemented, check Android permission requirements, device support, carrier availability, regional restrictions, and possible costs.
+- Distinguish local storage, queued delivery, provider acceptance, delivery confirmation, and failure.
+- Do not promise delivery in airplane mode, a dead zone, a powered-off device, or any other state where no working transmission channel exists.
+- Explain when an event is stored locally but has not reached a trusted contact.
+
+**5. Emergency response checklist**
+- Provide concise, context-sensitive, non-alarmist instructions.
+- Make essential instructions accessible without requiring an AI call.
+- Provide a quick way to contact the configured emergency service, subject to device capabilities.
+- Clearly distinguish general safety guidance from official instructions.
+- Avoid giving advice that assumes a particular emergency scenario without sufficient context.
+
+**6. False-alarm recovery and emergency-session history**
+- Allow the user to resolve an accidental activation.
+- Notify previously alerted contacts of a correction when a working channel is available and the user authorizes it.
+- Preserve an auditable session history, including activation, location updates, attempted deliveries, failures, cancellations, and resolutions.
+- Do not erase an event simply because it was cancelled.
+- Make retention and deletion behavior understandable and configurable where legally and technically appropriate.
+
+### B. Journey planning and route assistance
+
+**7. Journey sharing**
+- Allow users to create a journey with a destination, planned route, expected arrival, and selected trusted contacts.
+- Let the user choose what to share and for how long.
+- Show the active sharing state clearly.
+- Stop sharing at the configured end time or when the user ends the journey, subject to disclosed retention requirements.
+- Make revocation easy.
+
+**8. AI-assisted safer-route recommendations**
+- Integrate a genuine routing provider for available route calculation.
+- Present route alternatives with available distance, estimated travel time, route characteristics, and relevant verified context.
+- Use AI only to explain available evidence and compare alternatives; do not invent information.
+- Allow the user to choose the preferred route.
+- Do not label a route as objectively or guaranteed to be the safest.
+- Do not fabricate crime heatmaps, lighting data, open businesses, transport availability, or emergency resources.
+- Display the source and freshness of relevant information where available.
+- Explain uncertainty and missing data.
+- Provide a graceful non-AI fallback when AI services fail.
+
+**9. Route context and selected-route tracking**
+- Preserve the route the user chose to reach home.
+- Store the planned route separately from the actual location history.
+- Track progress only when the user has authorized the required location access.
+- Let the user compare planned and actual progress where supported.
+- Offer an optional route update or contact notification after a deviation according to user preferences.
+- Never infer that deviation means the user is in danger.
+- Do not silently transmit additional location history beyond the configured sharing policy.
+
+**10. Journey check-ins**
+- Let users configure departure, intermediate check-ins, and expected arrival.
+- Support user-configured reminders and escalation preferences.
+- Allow the user to confirm they are safe, extend the journey, change the destination, or end sharing.
+- Explain that reminders and background jobs may be delayed by Android restrictions.
+- Ensure a missed check-in does not automatically assert that an emergency occurred.
+
+**11. Personal safety plan**
+- Allow the user to configure trusted contacts, preferred escalation steps, emergency preferences, important information, and journey defaults.
+- Make sensitive fields optional.
+- Provide a clear review and update process.
+- Protect stored information using least-privilege access.
+- Allow the user to delete or export eligible data.
+
+### C. AI, information, and support
+
+**12. Grounded AI safety companion**
+- Provide practical assistance for safety planning, understanding options, finding appropriate resources, and organizing information.
+- Ground factual responses in curated, retrievable sources.
+- Return source references, publication or verification dates where available, and clear uncertainty.
+- Use server-side AI credentials.
+- Do not invent official advice, legal claims, phone numbers, organizations, or source citations.
+- Do not predict that a specific person, street, or journey is dangerous without reliable supporting evidence.
+- Do not claim to monitor the user continuously.
+- If the user may be in immediate danger, prioritize concise, actionable options and available emergency resources rather than a lengthy AI conversation.
+- Keep emergency activation independent from AI.
+- If the model or retrieval service fails, show a helpful fallback.
+- Minimize sensitive data sent to an AI provider; avoid including precise location or identifying information unless necessary and explicitly authorized.
+
+**13. Verified support directory**
+- Build a directory model with organization name, support category, region, contact details, official source, verification status, and last-verified date.
+- Support regional and language filters.
+- Prefer official government and organization sources.
+- Do not invent a directory of verified organizations.
+- Mark unverified, stale, unavailable, or setup-required records honestly.
+- Create an administrative verification workflow and an audit trail for changes.
+- Make the process for refreshing and validating entries explicit.
+- For India, support the ability to configure the official emergency number 112, with the appropriate official reference and regional applicability verified before launch.
+
+**14. Incident timeline and report builder**
+- Let the user assemble an incident timeline from selected events, notes, timestamps, and eligible evidence.
+- Distinguish recorded facts from user recollections and AI-generated summaries.
+- Generate a draft report that the user can edit, review, and explicitly export.
+- Never automatically submit a report to police, an employer, family, or any third party.
+- Do not describe a draft as an official complaint or legal document.
+- Use accurate timestamps and preserve source information where available.
+- Protect report access and sharing with explicit user authorization.
+
+**15. Multilingual and accessible assistance**
+- Launch with English, Hindi, and Marathi.
+- Externalize user-facing strings into localization resources.
+- Support language switching in settings and during appropriate safety workflows.
+- Provide translations for essential emergency UI, onboarding, privacy notices, and core workflows.
+- Do not silently fall back to a language the user may not understand.
+- Support screen readers, semantic labels, large text, sufficient contrast, touch targets, reduced cognitive load, and clear focus behavior.
+- Avoid relying on color alone to communicate status.
+- Explain when AI-generated translations may be imperfect.
+
+**16. After-incident support**
+- Provide optional next steps, including contacting trusted people, locating verified support organizations, documenting events, and accessing appropriate resources.
+- Avoid victim-blaming or pressuring the user to disclose information.
+- Let the user choose which steps to take.
+- Do not imply that Guardian AI provides professional medical, legal, or psychological care.
+- Ensure that support suggestions do not automatically transmit incident details.
+
+### D. Privacy, evidence, and supporting tools
+
+**17. Configurable privacy control centre**
+- Provide one place to review location sharing, trusted contacts, journey history, evidence, AI data use, notifications, retention, and account controls.
+- Use clear descriptions of what data is collected, why it is needed, who can access it, and when it is deleted.
+- Make sharing revocable.
+- Provide data export and deletion workflows where supported.
+- Enforce privacy decisions in backend authorization, not only the interface.
+- Avoid collecting data solely because it might be useful in the future.
+- Document data flows and retention rules.
+
+**18. Alert delivery transparency**
+- Show per-recipient delivery state where the provider supplies evidence.
+- Distinguish `queued`, `submitted`, `delivered`, `failed`, and `acknowledged` where each state is supported.
+- Do not show unsupported states.
+- Record timestamps, channel, provider response, and retry attempts where appropriate.
+- Do not reveal provider secrets or unnecessary contact details in logs.
+- Clearly explain when the system cannot determine whether a recipient saw an alert.
+
+**19. Private evidence vault**
+- Store user-selected evidence in private, access-controlled storage.
+- Use secure authentication and authorization for every read, upload, download, deletion, and share operation.
+- Avoid public storage URLs and publicly readable buckets.
+- Use short-lived authorized download access where appropriate.
+- Enforce file size, file type, upload authorization, and malware-risk controls where feasible.
+- Provide retention, deletion, export, and explicit sharing controls.
+- Make encryption and backup guarantees only when verified in the actual configuration.
+- Do not imply that cloud storage is invulnerable or that evidence is legally admissible by default.
+
+**20. Evidence recorder**
+- Support manual start and stop.
+- Offer an optional, explicitly configured SOS shortcut where Android permits the required behavior.
+- Show an unmistakable recording indicator and recording state.
+- Request runtime permissions and explain their purpose.
+- Never secretly record or secretly upload audio or video.
+- Make recording, saving, uploading, and sharing distinct user-visible actions.
+- Handle denied permissions, interrupted recordings, low storage, and failed uploads.
+- Preserve useful timestamps and metadata where available without inventing them.
+- Provide an accessible way to stop recording.
+- Review relevant legal, consent, and platform restrictions before release in each target region.
+
+**21. Fake call simulation**
+- Provide a user-initiated simulated incoming-call experience.
+- Clearly treat it as a simulation, not an actual phone call or an emergency service.
+- Do not impersonate real emergency services or claim that a contact is calling when they are not.
+- Do not rely on prohibited overlays or restricted call-screen behavior.
+- Respect Android notification, foreground-service, and background-launch restrictions.
+- Provide a graceful alternative if the operating system prevents the intended behavior.
+
+**22. Safer onboarding and emergency setup test**
+- Guide users through permissions, trusted contacts, location settings, emergency preferences, privacy choices, and optional evidence setup.
+- Explain each permission before requesting it.
+- Allow the user to defer optional permissions without misleading them about functionality that will be unavailable.
+- Provide a checklist of configured and unconfigured capabilities.
+- Include a clearly labelled test mode that does not trigger a real emergency.
+
+**23. Scheduled test alerts**
+- Let users schedule or initiate test alerts to themselves or explicitly designated test recipients.
+- Make test messages unmistakably labelled as tests.
+- Never contact real emergency services from test mode.
+- Never silently convert a test event into a production emergency.
+- Separate test and production event identifiers, backend paths, notification templates, and configuration.
+- Explain that Android background scheduling and notifications can be delayed or suppressed.
+- Provide test history and clear cancellation controls.
+
+## 5. Emergency coordinates and event model
+
+Design a robust emergency-event schema. At minimum, include:
+
+- Unique event ID and idempotency key.
+- Authenticated owner ID.
+- Event type and environment (`test` or `production`).
+- Activation timestamp.
+- Last-known latitude and longitude when available and authorized.
+- Location timestamp, accuracy, and freshness status.
+- Whether the location is current, stale, approximate, or unavailable.
+- Per-recipient delivery attempts and their actual statuses.
+- Channel used and provider reference where available.
+- Retry count and next retry eligibility where applicable.
+- User cancellation or resolution timestamp.
+- Relevant consent and sharing-policy version.
+- Minimal audit events required to investigate failures.
+
+When SOS activates:
+1. Create the local emergency session immediately.
+2. Read the latest permitted location already available.
+3. Do not block on obtaining a fresh GPS fix.
+4. Send the emergency event with the last-known coordinates and their timestamp and accuracy, if available.
+5. Continue a bounded, policy-compliant attempt to obtain fresher coordinates where permitted.
+6. Submit authorized alerts through configured channels.
+7. Retry eligible failed or queued events without creating duplicate sessions.
+8. Update the UI only from actual local, backend, or provider state.
+9. Preserve an understandable timeline for the user.
+10. Clearly show when delivery remains unconfirmed.
+
+If a new GPS fix arrives later, update the location event separately and transmit it only when allowed by the active sharing policy. Do not overwrite history in a way that makes an old coordinate appear new.
+
+**Important technical distinction:** GPS can determine location without internet, but GPS alone cannot send coordinates to another phone. A functioning communication channel is required to transmit an alert.
+
+## 6. Technology stack and architecture decision
+
+Use this preferred stack as the starting point.
+
+### Android
+- Kotlin.
+- Jetpack Compose.
+- Material 3.
+- AndroidX lifecycle and navigation components.
+- ViewModel and repository architecture.
+- Kotlin coroutines and Flow where appropriate.
+- Room for carefully selected local persistence.
+- Android Keystore and appropriate platform security APIs for sensitive local data.
+- WorkManager for eligible deferred tasks, with documented background-execution limitations.
+- Fused location services or another appropriately supported location API.
+- Runtime permission handling and explicit foreground-service declarations when applicable.
+
+Use clean separation between UI, domain logic, data repositories, platform services, and backend clients. Avoid placing business logic directly in Composable functions.
+
+### Website
+- React.
+- TypeScript.
+- A maintainable, responsive component system.
+- Accessible semantic HTML and keyboard navigation.
+- Proper loading, empty, error, and mobile states.
+- A lightweight public landing experience.
+- Secure account-related pages only if their inclusion and authentication architecture are explicitly planned.
+
+The website is not a replacement for the native Android application or its OS-level capabilities.
+
+### Backend candidate: Firebase
+Before finalizing, briefly compare Firebase with Supabase or another appropriate option based on the requirements, cost, security, data model, and team maintainability.
+
+Prefer Firebase unless the architecture review identifies a compelling reason to choose otherwise.
+
+Candidate Firebase components:
+- Firebase Authentication.
+- Cloud Firestore.
+- Cloud Functions or an appropriate server-side runtime.
+- Firebase Cloud Messaging.
+- Cloud Storage for Firebase.
+- Firebase App Check where suitable.
+- Firebase Emulator Suite for local integration testing.
+- Appropriate logging, monitoring, and secret management.
+
+Use server-side functions for privileged operations, emergency-event processing, notification dispatch, AI requests, verification workflows, and sensitive audit operations.
+
+Do not assume Firebase Cloud Messaging proves a notification was shown or read.
+
+Do not store private records in publicly readable database paths or storage buckets.
+
+If an alternative backend is selected, document the decision and update every relevant implementation instruction accordingly.
+
+### AI and routing
+- Keep AI-provider keys server-side.
+- Use a server-side retrieval layer for curated, source-grounded content.
+- Use a real routing provider for route computation.
+- Choose providers only after reviewing availability, geographic coverage, terms, licensing, pricing, privacy, and required API keys.
+- Keep provider integrations behind interfaces so providers can be replaced.
+- Provide honest unavailable states when provider credentials are missing.
+
+Do not hardcode secrets, pretend API keys exist, or use unrestricted serverless endpoints.
+
+## 7. Authentication, authorization, and data model
+
+Define the data model before implementing screens that depend on it.
+
+Design suitable schemas or collections for:
+- User profiles and preferences.
+- Trusted contacts and verification state.
+- Consent records and sharing policies.
+- Emergency sessions.
+- Emergency locations and location updates.
+- Per-recipient alert attempts.
+- Journeys and planned routes.
+- Actual journey-location events, when authorized.
+- Journey check-ins and reminder state.
+- Personal safety plans.
+- Verified support directory entries and verification history.
+- AI source documents and retrieval metadata.
+- Incident timelines and draft reports.
+- Evidence metadata and private object references.
+- Recording sessions.
+- Privacy, retention, export, and deletion requests.
+- Test alerts and test-session history.
+- Minimal security audit events.
+
+Requirements:
+- Define ownership and access control for every private resource.
+- Verify authorization on the server for every sensitive operation.
+- Prevent users from changing owner IDs or accessing another user's data by editing client requests.
+- Enforce trusted-contact access through explicit authorization, not knowledge of a document ID.
+- Validate all inputs server-side.
+- Enforce request size, file size, type, and rate limits where appropriate.
+- Use idempotency for emergency creation and notification dispatch.
+- Protect against replay, duplicate submissions, unauthorized writes, and race conditions.
+- Define account deletion and data-retention behavior.
+- Avoid storing passwords, secrets, or unnecessary sensitive data in application logs.
+- Keep audit records minimal, access-controlled, and covered by a retention policy.
+
+Create and test actual backend security rules. Never treat client-side route guards as security.
+
+## 8. UI/UX and visual design
+
+Design a calm, trustworthy, modern, accessible interface. It must feel serious and reassuring—not frightening, cluttered, childish, or artificially futuristic.
+
+### Design direction
+- Clear typography and readable spacing.
+- Consistent design tokens for color, type, spacing, shape, elevation, and motion.
+- High-contrast SOS action with deliberate visual hierarchy.
+- Neutral surfaces for everyday use.
+- Accessible status indicators that do not rely on color alone.
+- Minimal animation in urgent workflows.
+- Predictable navigation and a persistent sense of context.
+- No fake counters, fabricated testimonials, fabricated safety statistics, or invented partner logos.
+
+Create a reusable component library rather than styling every screen independently.
+
+### Native Android screens
+Implement the following screens and their meaningful states:
+
+1. First launch and welcome.
+2. Language selection.
+3. Account creation and sign-in.
+4. Privacy explanation and consent.
+5. Permission onboarding.
+6. Trusted-contact setup and verification.
+7. Emergency setup checklist.
+8. Test-mode walkthrough.
+9. Home and safety dashboard.
+10. SOS activation and active emergency session.
+11. Emergency event history and timeline.
+12. Contact delivery status.
+13. Live location sharing.
+14. Journey creation.
+15. Route comparison and user route selection.
+16. Active journey and check-ins.
+17. Personal safety plan.
+18. AI safety companion.
+19. Verified support directory.
+20. Incident timeline editor.
+21. Report preview, editing, and export.
+22. Private evidence vault.
+23. Evidence recorder and recording controls.
+24. Fake-call simulation.
+25. Privacy control centre.
+26. Notification and escalation settings.
+27. Scheduled test alerts.
+28. Language, accessibility, and app settings.
+29. Data export, account deletion, and help.
+30. Error, offline, permission-denied, stale-location, and service-unavailable states.
+
+Design the active emergency experience for quick comprehension. Avoid placing long forms or AI chat in the critical path.
+
+### Responsive landing website
+Build a production-quality public website with:
+- Hero section explaining Guardian AI.
+- Clear product value proposition.
+- Feature overview grouped by preparation, emergency response, and aftercare.
+- How it works.
+- Privacy and transparency principles.
+- Explanation of location-sharing and consent controls.
+- AI limitations and responsible-use explanation.
+- Supported languages.
+- Frequently asked questions.
+- Contact and support information using configurable real details.
+- Clear app availability or waitlist CTA, depending on actual release status.
+- Footer with privacy policy, terms, safety limitations, and contact links.
+
+Do not invent an app-store listing, organization address, public launch status, official partnership, or contact email.
+
+The website must be responsive on mobile, tablet, and desktop, with accessible keyboard navigation and proper metadata. Do not expose private user records on public pages.
+
+## 9. AI grounding and response safety
+
+Implement the AI companion as a backend service, not as a direct client-to-model integration.
+
+The backend must:
+1. Validate the request and authenticated user's permissions.
+2. Retrieve relevant approved sources where appropriate.
+3. Send only the minimum necessary context to the AI provider.
+4. Require the model to distinguish source-supported facts from uncertainty.
+5. Validate and return source references from actual retrieved records.
+6. Avoid fabricated citations.
+7. Apply reasonable timeouts, error handling, rate limits, and cost controls.
+8. Avoid logging sensitive prompts and precise location unnecessarily.
+9. Return a graceful fallback when retrieval or the model is unavailable.
+
+For every source-grounded response, retain appropriate metadata such as source title, URL, last-verified date, and the exact supported claim where feasible.
+
+If no trustworthy source is available, say so rather than inventing an answer.
+
+Never allow the AI to:
+- Trigger or cancel an SOS autonomously.
+- Automatically contact police or other third parties.
+- Start recording without the configured explicit user action.
+- Change consent or privacy settings.
+- Predict personal danger with false certainty.
+- Generate fabricated emergency-service or support-directory entries.
+- Treat a missed check-in or route deviation as proof of an emergency.
+
+Keep emergency instructions and essential app functionality available if the AI provider is down.
+
+## 10. Security and privacy threat model
+
+Perform a practical threat assessment covering:
+- Unauthorized account access.
+- Broken object-level authorization.
+- Stolen sessions and compromised devices.
+- Contact impersonation.
+- Malicious or forged requests.
+- Location-history exposure.
+- Evidence theft or unauthorized sharing.
+- Public storage configuration.
+- Secret leakage.
+- Notification spoofing and duplicate delivery.
+- Replay attacks.
+- Excessive API use and AI cost abuse.
+- Malicious file uploads.
+- Overly broad permissions.
+- Background-task and retry failures.
+- Accidental production actions from test mode.
+- Insider or administrative misuse.
+- Data exposure through analytics, logs, crash reports, and third-party AI providers.
+
+Implement reasonable mitigations, document residual risks, and create a security checklist for release.
+
+Use secure transport, least privilege, secret management, server-side validation, and supported platform protections.
+
+Do not claim that encryption, deletion, backup, or access revocation is complete unless it has actually been implemented and verified. Explain the limitations of revocation for data already delivered to another person or downloaded outside the app.
+
+## 11. Notifications and integration transparency
+
+Create a provider abstraction for push notifications and any supported fallback channels.
+
+For each integration, document:
+- Required credentials and configuration.
+- Required Android permissions.
+- Required provider setup.
+- Whether a paid plan may be needed.
+- Geographic or carrier restrictions.
+- Data shared with the provider.
+- Actual supported delivery states.
+- Failure behavior.
+- Test procedure.
+- Production-readiness status.
+
+Use explicit configuration states such as:
+- `NOT_CONFIGURED`
+- `CONFIGURED_NOT_VERIFIED`
+- `READY`
+- `DEGRADED`
+- `FAILED`
+
+These labels are examples; adapt them to the actual implementation.
+
+Do not show a green “working” state merely because a key exists. A readiness check should reflect what has actually been verified.
+
+Keep test and production credentials, channels, event paths, and templates separate. Ensure a test alert cannot accidentally become a real emergency alert.
+
+## 12. Testing strategy
+
+Build tests alongside the implementation.
+
+### Unit tests
+Test:
+- SOS state transitions.
+- Event idempotency.
+- Location freshness and timestamp handling.
+- Retry and backoff logic.
+- Contact escalation preferences.
+- Consent enforcement.
+- Route-deviation behavior.
+- Test versus production separation.
+- Privacy and retention logic.
+- AI response validation.
+- Report generation and editing logic.
+
+### Backend integration tests
+Test:
+- Authentication and ownership.
+- Unauthorized data access.
+- Security rules.
+- Trusted-contact permissions.
+- Emergency event creation.
+- Duplicate event handling.
+- Failed notification dispatch.
+- Delivery-state updates.
+- Storage authorization.
+- Upload validation.
+- AI provider failure.
+- Rate limits and invalid inputs.
+- Data export and deletion workflows.
+
+Use emulators or isolated test environments wherever possible.
+
+### Android tests
+Test:
+- First-run and onboarding.
+- Permission granted, denied, and revoked.
+- SOS interaction.
+- Cached location and stale-location warnings.
+- GPS unavailable.
+- Network unavailable and recovery.
+- Background execution limitations.
+- Process interruption and app restart.
+- Recording permission denial and interruption.
+- Accessibility and large-text behavior.
+- Test-alert isolation.
+- Multilingual layouts.
+
+### Website tests
+Test:
+- Responsive layouts.
+- Navigation and CTA behavior.
+- Keyboard navigation.
+- Semantic structure.
+- Form validation.
+- Loading, empty, and error states.
+- Broken-link and missing-configuration handling.
+- No accidental exposure of private backend data.
+
+### Required failure scenarios
+At minimum, test these cases:
+1. SOS activates with no location permission.
+2. SOS activates with an old cached coordinate.
+3. SOS activates with GPS but no internet.
+4. SOS activates when neither GPS nor network is available.
+5. Backend accepts an event but the notification provider fails.
+6. A provider accepts a message without a confirmed device delivery.
+7. A retry attempts to submit the same event twice.
+8. A trusted contact has been removed during an active journey.
+9. The user revokes location sharing.
+10. A scheduled test alert fires while production mode is enabled.
+11. AI service is unavailable during an active emergency.
+12. An unauthorized user tries to access evidence.
+13. An uploaded file violates size or type restrictions.
+14. A user deletes their account with retained evidence or pending events.
+15. A route provider returns incomplete or stale information.
+
+Do not claim a test passed unless it was actually executed and the result is available.
+
+## 13. Deployment and setup
+
+Create a clear setup guide covering:
+
+- Prerequisites and supported versions.
+- Project structure.
+- Environment configuration.
+- Firebase project creation and application registration.
+- Authentication setup.
+- Firestore schema and security rules.
+- Cloud Functions deployment.
+- Cloud Storage configuration.
+- Firebase Cloud Messaging setup.
+- App Check and applicable security configuration.
+- AI-provider key setup and server-side secret management.
+- Routing-provider setup.
+- Official support-directory data ingestion and verification.
+- Local development and emulator usage.
+- Android build and device installation.
+- Website development and production build.
+- CI checks.
+- Logging and monitoring.
+- Test and production environment separation.
+- Rollback and incident-response guidance.
+- Cost monitoring and provider quotas.
+
+Provide `.env.example` or equivalent templates containing placeholders only. Never place real secrets in source control or generated documentation.
+
+Create a deployment checklist with explicit items marked:
+- Implemented and locally verified.
+- Implemented but not yet verified.
+- Requires credentials.
+- Requires device testing.
+- Requires external approval or service setup.
+- Deferred, with reason.
+
+Do not mark the application production-ready merely because the website loads.
+
+## 14. Suggested repository structure
+
+Use a clean monorepo unless the environment makes another structure more appropriate.
+
+guardian-ai/
+- android-app/
+  - app/
+  - core/
+  - feature/
+  - data/
+  - domain/
+  - design-system/
+- website/
+  - src/
+  - public/
+  - tests/
+- backend/
+  - functions/
+  - src/
+  - tests/
+- shared/
+  - api-contracts/
+  - schemas/
+  - localization/
+- docs/
+  - architecture/
+  - security/
+  - privacy/
+  - setup/
+  - testing/
+  - deployment/
+- firebase/
+  - firestore.rules
+  - firestore.indexes.json
+  - storage.rules
+- .env.example
+- README.md
+
+Adjust the structure when required by the chosen frameworks. Do not force code into this structure if it makes the actual project less maintainable.
+
+## 15. Implementation phases
+
+Build in phases, keeping the project runnable at every stage.
+
+**Phase 0 — Architecture and risk review**
+- Inspect the existing workspace.
+- Compare backend candidates.
+- Document assumptions, architecture, data flows, threat model, and external dependencies.
+- Define event and API contracts.
+- Identify what can be completed in the current environment.
+- Produce a feature-to-implementation matrix covering all 23 areas.
+
+**Phase 1 — Secure emergency foundation**
+- Android project and design system.
+- Authentication and onboarding.
+- Trusted contacts.
+- Consent and privacy foundations.
+- SOS session model.
+- Last-known-coordinate handling.
+- Honest delivery states.
+- Session history and false-alarm recovery.
+- Backend authorization and security tests.
+
+**Phase 2 — Journey and communication**
+- Journey planning and sharing.
+- Check-ins and reminders.
+- Notification dispatch and retries.
+- Low-connectivity handling.
+- Test alerts.
+- Delivery transparency.
+
+**Phase 3 — AI, routes, and support**
+- Routing-provider integration.
+- User-selected route recommendations.
+- Route context and tracking.
+- Grounded AI service.
+- Verified support directory.
+- Personal safety plan.
+- English, Hindi, and Marathi localization.
+- Incident timeline and report builder.
+
+**Phase 4 — Evidence and advanced tools**
+- Private evidence vault.
+- Visible manual recorder and optional SOS shortcut.
+- Fake-call simulation.
+- After-incident support.
+- Expanded privacy, retention, export, and deletion workflows.
+
+**Phase 5 — Website and release readiness**
+- Complete responsive landing website.
+- Accessibility review.
+- Full automated and manual test suite.
+- Threat-model review.
+- Device and background-execution testing.
+- Deployment documentation.
+- Production-readiness assessment.
+
+Do not skip a phase's security requirements just to reach the next phase faster.
+
+## 16. Required deliverables
+
+Produce the following as actual files or implementation outputs wherever the environment supports them:
+
+1. Architecture decision record.
+2. Product requirements and feature matrix for all 23 areas.
+3. System architecture diagram.
+4. Database schemas and data-flow documentation.
+5. Android application source code.
+6. Responsive website source code.
+7. Backend functions and API contracts.
+8. Authentication, database, and storage security rules.
+9. AI retrieval and response-validation implementation.
+10. Notification, retry, and idempotency logic.
+11. Localization resources for English, Hindi, and Marathi.
+12. Unit and integration tests.
+13. Android and website tests.
+14. Environment templates.
+15. Local setup instructions.
+16. Deployment instructions.
+17. Privacy and security documentation.
+18. External integration configuration guide.
+19. Feature readiness matrix.
+20. Known limitations and unresolved decisions.
+21. Release checklist.
+22. Final summary of files created, commands executed, test results, and remaining work.
+
+## 17. Definition of done
+
+A feature is not complete simply because its screen exists.
+
+A feature is considered implemented only when:
+- Its UI exists.
+- Its state transitions and business logic work.
+- Required backend operations exist.
+- Access control is enforced.
+- Errors and unavailable states are handled.
+- Relevant tests exist.
+- Its setup requirements are documented.
+- The interface reports actual state rather than fabricated success.
+
+Before calling the project ready, verify that:
+- All 23 feature areas have an explicit implementation status.
+- SOS works without AI.
+- Last-known coordinates preserve their original timestamp and accuracy.
+- A failed transmission is never shown as delivered.
+- Duplicate retries do not create duplicate emergency sessions.
+- Private evidence and location records cannot be accessed by unauthorized users.
+- Test alerts cannot reach real emergency services.
+- AI outputs do not invent source references.
+- Users can review and control their data.
+- Essential screens support English, Hindi, and Marathi.
+- Critical failure states are understandable and accessible.
+- Build and test results are reported honestly.
+- Unconfigured integrations are explicitly listed.
+- No secrets or sensitive sample data are committed.
+- Production-readiness claims match actual verification.
+
+## 18. How to work with me
+
+Begin by inspecting the available environment and determining which parts can actually be created, built, and tested here.
+
+Then:
+1. Provide a concise architecture decision and implementation plan.
+2. List external dependencies and configuration required.
+3. Produce the project skeleton and shared contracts.
+4. Implement Phase 1 end-to-end.
+5. Run the available tests and report real results.
+6. Continue phase by phase, preserving all 23 required feature areas.
+7. Maintain a feature matrix and unresolved-work list.
+8. Update documentation as the implementation changes.
+9. If blocked, explain the exact blocker, complete the independent work that remains possible, and provide reproducible next steps.
+
+Do not respond with only a high-level plan or a sample screen. Start creating the actual project files and implementation after the architecture review.
+
+**Final instruction:** Build Guardian AI as a trustworthy safety product whose most important qualities are dependable emergency behavior, privacy, clear communication, honest limitations, and maintainable engineering—not merely an impressive demo.

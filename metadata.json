@@ -1,0 +1,6 @@
+{
+  "name": "Guardian AI",
+  "description": "Privacy-first personal safety platform for women with one-action SOS, live journey tracking, verified support directory, and trusted contacts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

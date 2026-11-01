@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">गार्डियन AI</string>
+    <string name="tagline">महिलांच्या वैयक्तिक सुरक्षिततेसाठी गोपनीयता-केंद्रित साथी</string>
+    <string name="emergency_sos">तातडीचा SOS</string>
+    <string name="sos_instruction">विश्वासू संपर्कांना सावध करण्यासाठी 2 सेकंद दाबून ठेवा</string>
+    <string name="sos_activating">SOS सुरू होत आहे...</string>
+    <string name="sos_active">आणीबाणी सक्रिय</string>
+    <string name="cancel_sos">खोटा अलार्म रद्द करा</string>
+    <string name="call_112">112 आपत्कालीन सेवेला कॉल करा</string>
+    <string name="call_1091">1091 महिला हेल्पलाइनला कॉल करा</string>
+    <string name="trusted_contacts_title">विश्वासू सुरक्षा मंडळ</string>
+    <string name="live_location_title">थेट स्थान (Live Location)</string>
+    <string name="journey_title">प्रवास शेअरिंग</string>
+    <string name="safe_routes_title">सुरक्षित मार्ग पर्याय</string>
+    <string name="directory_title">सत्यापित मदत डिरेक्टरी</string>
+    <string name="evidence_title">खाजगी पुरावा तिजोरी</string>
+    <string name="fake_call_title">फेक कॉल सिम्युलेशन</string>
+    <string name="privacy_title">गोपनीयता नियंत्रण केंद्र</string>
+    <string name="test_mode_title">सुरक्षा चाचणी मोड</string>
+    <string name="ai_companion_title">विश्वासू सुरक्षा साथीदार</string>
+    <string name="report_builder_title">घटना टाइमलाइन आणि मसुदा अहवाल</string>
+    <string name="status_queued">स्थानिक रांगेत</string>
+    <string name="status_submitted">पाठवले</string>
+    <string name="status_delivered">पोहोचले</string>
+    <string name="status_acknowledged">मान्य केले</string>
+    <string name="status_failed">अयशस्वी</string>
+    <string name="stale_warning">इशारा: स्थान 5 मिनिटांपेक्षा जुने आहे</string>
+    <string name="approx_warning">अंदाजे स्थान. नवीन GPS मिळवणे सुरू आहे.</string>
+</resources>

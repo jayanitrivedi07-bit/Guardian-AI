@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guardian AI — Personal Safety for Women</title>
+  <meta name="description" content="Guardian AI is a privacy-first personal safety companion for women. Plan journeys, share live location with your trusted circle, and trigger immediate SOS help with zero delay.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-warm: #FAF7F7;
+      --surface-white: #FFFFFF;
+      --surface-blush: #F8E8ED;
+      --surface-pink-tint: #FFF1F4;
+      --primary-pink: #D87893;
+      --primary-pink-dark: #B55872;
+      --primary-pink-light: #E8A0B4;
+      --text-charcoal: #30272B;
+      --text-muted: #796D72;
+      --text-subtle: #A3969C;
+      --border-subtle: #EADDE1;
+      --border-hairline: #F2E9EC;
+      --emergency-red: #C92A2A;
+      --success-green: #2B8A3E;
+      --warning-amber: #D97706;
+      --font-main: 'Plus Jakarta Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-warm);
+      color: var(--text-charcoal);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    header {
+      background: rgba(250, 247, 247, 0.95);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-charcoal);
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--surface-blush);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--primary-pink-dark);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-charcoal);
+    }
+
+    .lang-pill {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+
+    .subtle-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface-blush);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary-pink-dark);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      max-width: 820px;
+      margin: 0 auto 20px;
+      color: var(--text-charcoal);
+    }
+
+    .hero h1 span {
+      color: var(--primary-pink-dark);
+    }
+
+    .hero-lead {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 660px;
+      margin: 0 auto 36px;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 50px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.15s ease-in-out;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--primary-pink-dark);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #9E465E;
+    }
+
+    .btn-secondary {
+      background: var(--surface-white);
+      color: var(--text-charcoal);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-secondary:hover {
+      background: #F5EBEF;
+    }
+
+    /* Status Grid */
+    .status-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 860px;
+      margin: 0 auto 60px;
+      text-align: left;
+    }
+
+    .status-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .status-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-charcoal);
+      margin-bottom: 4px;
+    }
+
+    .status-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Core Pillars */
+    .section {
+      padding: 70px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      max-width: 620px;
+      margin: 0 auto 48px;
+    }
+
+    .section-title h2 {
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      color: var(--text-charcoal);
+    }
+
+    .section-title p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .phases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .phase-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 28px;
+    }
+
+    .phase-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--primary-pink-dark);
+      margin-bottom: 10px;
+    }
+
+    .phase-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text-charcoal);
+    }
+
+    .phase-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .feature-list li {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .feature-list li::before {
+      content: "•";
+      color: var(--primary-pink);
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    /* Transparency Section */
+    .transparency-box {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      margin: 40px 0;
+    }
+
+    .phone-mockup {
+      background: var(--bg-warm);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .mockup-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      font-size: 0.88rem;
+    }
+
+    .status-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .badge-delivered { background: #EBFBEE; color: var(--success-green); }
+    .badge-submitted { background: #E7F5FF; color: #1971C2; }
+    .badge-queued { background: #FFFBEB; color: var(--warning-amber); }
+
+    /* Helplines Strip */
+    .helplines-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .helpline-item {
+      background: var(--surface-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .helpline-num {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-pink-dark);
+      margin-bottom: 4px;
+    }
+
+    .helpline-num.red {
+      color: var(--emergency-red);
+    }
+
+    .helpline-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-charcoal);
+    }
+
+    .helpline-org {
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+      margin-top: 2px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 48px 0;
+      background: var(--surface-white);
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-top: 60px;
+    }
+
+    .footer-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    @media (max-width: 860px) {
+      .hero h1 { font-size: 2.2rem; }
+      .status-strip, .phases-grid, .helplines-grid { grid-template-columns: 1fr; }
+      .transparency-box { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <div class="nav-row">
+        <a href="#" class="brand">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 6c1.4 0 2.5 1.1 2.5 2.5 0 .9-.5 1.7-1.2 2.1l1.7 4.4h-6l1.7-4.4c-.7-.4-1.2-1.2-1.2-2.1 0-1.4 1.1-2.5 2.5-2.5z"/></svg>
+          </div>
+          <span>Guardian AI</span>
+        </a>
+        <nav class="nav-links">
+          <a href="#principles">Principles</a>
+          <a href="#features">Features</a>
+          <a href="#helplines">Verified Helplines</a>
+        </nav>
+        <div class="lang-pill">
+          EN • हिन्दी • मराठी
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="subtle-badge">
+          Personal Safety Companion for Women
+        </div>
+        <h1>
+          Dependable safety when seconds count.<br>
+          <span>Zero delay in emergency SOS.</span>
+        </h1>
+        <p class="hero-lead">
+          Guardian AI helps women prepare for journeys, share their location with trusted contacts, trigger immediate help without waiting for AI or GPS lock, and organize evidence privately.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#features" class="btn btn-primary">Explore Features</a>
+          <a href="#principles" class="btn btn-secondary">Safety Principles</a>
+        </div>
+
+        <div class="status-strip">
+          <div class="status-card">
+            <div class="status-title">Immediate SOS trigger</div>
+            <div class="status-desc">Zero AI overhead. Emergency session starts on-device locally within milliseconds.</div>
+          </div>
+          <div class="status-card">
+            <div class="status-title">Honest delivery receipts</div>
+            <div class="status-desc">Clearly tracks Queued, Dispatched, and Delivered states. Stale GPS fixes are warned.</div>
+          </div>
+          <div class="status-card">
+            <div class="status-title">Verified India helplines</div>
+            <div class="status-desc">Direct routing to 112 (National Emergency), 1091 (Women Helpline), and 181 (Sakhi).</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3-Phase Architecture -->
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-title">
+          <h2>Support across all three safety phases</h2>
+          <p>Thoughtful engineering for before you step out, during travel, and following an unexpected encounter.</p>
+        </div>
+
+        <div class="phases-grid">
+          <!-- Phase 1 -->
+          <div class="phase-card">
+            <div class="phase-tag">Before Journey</div>
+            <h3>Preparation &amp; Circle</h3>
+            <p>Configure emergency defaults and stay prepared ahead of travel.</p>
+            <ul class="feature-list">
+              <li><strong>Trusted Safety Circle:</strong> Verified contacts with escalation priority.</li>
+              <li><strong>Safer Route Options:</strong> Review transit alternatives with street lighting and police chowki presence.</li>
+              <li><strong>Personal Safety Plan:</strong> Emergency medical notes, custom SMS, transit mode.</li>
+              <li><strong>Rehearsal Test Mode:</strong> Dry-run alerts safely without dialing emergency services.</li>
+            </ul>
+          </div>
+
+          <!-- Phase 2 -->
+          <div class="phase-card" style="border-color: var(--primary-pink); background: var(--surface-pink-tint);">
+            <div class="phase-tag" style="color: var(--primary-pink-dark);">During Transit</div>
+            <h3>Emergency &amp; Journey</h3>
+            <p>Immediate, unmistakable actions when seconds count.</p>
+            <ul class="feature-list">
+              <li><strong>High-Contrast SOS:</strong> 2-second deliberate hold button with instant local activation.</li>
+              <li><strong>Delivery Transparency:</strong> Real per-contact receipts (Queued, Dispatched, Delivered).</li>
+              <li><strong>Low-Connectivity Queue:</strong> Local offline queue automatically retries when signal returns.</li>
+              <li><strong>Simulated Call:</strong> Discreet incoming call simulation to exit uncomfortable situations.</li>
+              <li><strong>Quick Emergency Dials:</strong> One-tap access to official helplines 112 and 1091.</li>
+            </ul>
+          </div>
+
+          <!-- Phase 3 -->
+          <div class="phase-card">
+            <div class="phase-tag">After Incident</div>
+            <h3>Evidence &amp; Aftercare</h3>
+            <p>Private documentation, support directories, and grounded guidance.</p>
+            <ul class="feature-list">
+              <li><strong>Incident Timeline:</strong> Combines sensor timestamps and recollections into an editable draft.</li>
+              <li><strong>Private Evidence Vault:</strong> Local storage with SHA-256 integrity checksums.</li>
+              <li><strong>Grounded Legal Guide:</strong> Verifiable Indian legal rights (Zero FIR, Legal Aid, Sakhi Scheme).</li>
+              <li><strong>Verified Helplines:</strong> 112, NCW 1091, 181 Women in Distress, 139 Railway Safety.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Delivery Transparency -->
+    <section class="section" id="principles">
+      <div class="container">
+        <div class="transparency-box">
+          <div>
+            <div class="subtle-badge">Honest Transparency</div>
+            <h2 style="font-size:1.85rem; font-weight:700; margin-bottom:14px; letter-spacing:-0.02em;">Never wonder if your circle saw your alert.</h2>
+            <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:18px;">
+              Most apps show a misleading checkmark even when offline. Guardian AI provides true provider delivery status:
+            </p>
+            <ul class="feature-list">
+              <li><strong>Queued:</strong> Stored locally on phone; waiting for cellular signal.</li>
+              <li><strong>Dispatched:</strong> Submitted to network gateway for transmission.</li>
+              <li><strong>Delivered:</strong> Confirmed delivery packet received on contact's phone.</li>
+              <li><strong>Acknowledged:</strong> Contact tapped and opened the emergency notification.</li>
+            </ul>
+          </div>
+
+          <div class="phone-mockup">
+            <div style="font-size:0.8rem; font-weight:600; color:var(--text-muted); margin-bottom:10px;">DISPATCH STATUS PREVIEW</div>
+            <div class="mockup-row">
+              <div>
+                <strong>Pooja Sharma (Sister)</strong><br>
+                <small style="color:var(--text-muted);">+91 98201 12345</small>
+              </div>
+              <span class="status-badge badge-delivered">Delivered</span>
+            </div>
+            <div class="mockup-row">
+              <div>
+                <strong>Dr. Rohan Patel (Partner)</strong><br>
+                <small style="color:var(--text-muted);">+91 98190 67890</small>
+              </div>
+              <span class="status-badge badge-submitted">Dispatched</span>
+            </div>
+            <div class="mockup-row">
+              <div>
+                <strong>Ananya Sen (Friend)</strong><br>
+                <small style="color:var(--text-muted);">+91 98205 54321</small>
+              </div>
+              <span class="status-badge badge-queued">Queued</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Official Helplines -->
+    <section class="section" id="helplines">
+      <div class="container">
+        <div class="section-title">
+          <h2>Official verified helplines (India)</h2>
+          <p>Verified with Ministry of Home Affairs, NCW, and Ministry of Women &amp; Child Development.</p>
+        </div>
+
+        <div class="helplines-grid">
+          <div class="helpline-item">
+            <div class="helpline-num red">112</div>
+            <div class="helpline-label">National Emergency</div>
+            <div class="helpline-org">Ministry of Home Affairs (ERSS)</div>
+          </div>
+          <div class="helpline-item">
+            <div class="helpline-num">1091</div>
+            <div class="helpline-label">Women Helpline</div>
+            <div class="helpline-org">National Commission for Women</div>
+          </div>
+          <div class="helpline-item">
+            <div class="helpline-num">181</div>
+            <div class="helpline-label">Sakhi One-Stop Centre</div>
+            <div class="helpline-org">Ministry of Women &amp; Child Dev</div>
+          </div>
+          <div class="helpline-item">
+            <div class="helpline-num">139</div>
+            <div class="helpline-label">Railway Safety</div>
+            <div class="helpline-org">Indian Railways Security / RPF</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-flex">
+      <div>
+        <strong>Guardian AI</strong> — Personal Safety Companion for Women<br>
+        <small style="color:var(--text-subtle);">Zero AI delay in emergency path • Local-first privacy • Verified statutory sources</small>
+      </div>
+      <div>
+        <a href="#principles" style="color:var(--text-muted); text-decoration:none; margin-right:16px;">Safety Principles</a>
+        <a href="#helplines" style="color:var(--text-muted); text-decoration:none;">Helplines</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

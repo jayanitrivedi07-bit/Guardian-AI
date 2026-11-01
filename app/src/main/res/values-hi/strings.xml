@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">गार्डियन AI</string>
+    <string name="tagline">महिलाओं की व्यक्तिगत सुरक्षा के लिए निजता-केंद्रित साथी</string>
+    <string name="emergency_sos">आपातकालीन SOS</string>
+    <string name="sos_instruction">विश्वस्त संपर्कों को सतर्क करने के लिए 2 सेकंड दबाकर रखें</string>
+    <string name="sos_activating">SOS सक्रिय हो रहा है...</string>
+    <string name="sos_active">आपातकाल सक्रिय</string>
+    <string name="cancel_sos">गलत अलार्म रद्द करें</string>
+    <string name="call_112">112 आपातकालीन सेवा को कॉल करें</string>
+    <string name="call_1091">1091 महिला हेल्पलाइन को कॉल करें</string>
+    <string name="trusted_contacts_title">विश्वस्त सुरक्षा चक्र</string>
+    <string name="live_location_title">लाइव लोकेशन</string>
+    <string name="journey_title">यात्रा साझाकरण</string>
+    <string name="safe_routes_title">सुरक्षित मार्ग विकल्प</string>
+    <string name="directory_title">सत्यापित सहायता निर्देशिका</string>
+    <string name="evidence_title">निजी साक्ष्य तिजोरी</string>
+    <string name="fake_call_title">नकली कॉल सिमुलेशन</string>
+    <string name="privacy_title">गोपनीयता नियंत्रण केंद्र</string>
+    <string name="test_mode_title">सुरक्षा परीक्षण मोड</string>
+    <string name="ai_companion_title">विश्वसनीय सुरक्षा साथी</string>
+    <string name="report_builder_title">घटना टाइमलाइन और रिपोर्ट</string>
+    <string name="status_queued">स्थानीय रूप से कतारबद्ध</string>
+    <string name="status_submitted">प्रस्तुत</string>
+    <string name="status_delivered">वितरित</string>
+    <string name="status_acknowledged">स्वीकृत</string>
+    <string name="status_failed">असफल</string>
+    <string name="stale_warning">चेतावनी: स्थान 5 मिनट से अधिक पुराना है</string>
+    <string name="approx_warning">अनुमानित सेल/वाई-फाई स्थान। नया जीपीएस प्राप्त हो रहा है।</string>
+</resources>

@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Guardian AI</string>
+    <string name="tagline">Privacy-First Women\'s Personal Safety Companion</string>
+    <string name="emergency_sos">EMERGENCY SOS</string>
+    <string name="sos_instruction">Hold for 2 seconds to alert trusted contacts and start emergency session</string>
+    <string name="sos_activating">ACTIVATING SOS...</string>
+    <string name="sos_active">EMERGENCY ACTIVE</string>
+    <string name="cancel_sos">Cancel False Alarm</string>
+    <string name="call_112">Call 112 Emergency</string>
+    <string name="call_1091">Call 1091 Women Helpline</string>
+    <string name="trusted_contacts_title">Trusted Safety Circle</string>
+    <string name="live_location_title">Live Location</string>
+    <string name="journey_title">Journey Sharing</string>
+    <string name="safe_routes_title">Safer Route Options</string>
+    <string name="directory_title">Verified Support Directory</string>
+    <string name="evidence_title">Private Evidence Vault</string>
+    <string name="fake_call_title">Fake Call Simulation</string>
+    <string name="privacy_title">Privacy Control Centre</string>
+    <string name="test_mode_title">Safety Test Mode</string>
+    <string name="ai_companion_title">Grounded Safety Companion</string>
+    <string name="report_builder_title">Incident Timeline &amp; Draft Report</string>
+    <string name="status_queued">Locally Queued</string>
+    <string name="status_submitted">Submitted</string>
+    <string name="status_delivered">Delivered</string>
+    <string name="status_acknowledged">Acknowledged</string>
+    <string name="status_failed">Failed</string>
+    <string name="stale_warning">Warning: Location fix is stale (more than 5 minutes old)</string>
+    <string name="approx_warning">Approximate cell/Wi-Fi location. Fresh GPS fix in progress.</string>
+</resources>

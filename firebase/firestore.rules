@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // User profile
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Trusted Contacts
+    match /users/{userId}/contacts/{contactId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Emergency Sessions: Owner has full read/write.
+    // Authorized trusted contacts can read if their UID is in the authorizedContactUids list.
+    match /emergency_sessions/{sessionId} {
+      allow create: if request.auth != null && request.resource.data.ownerId == request.auth.uid;
+      allow read: if request.auth != null && (
+        resource.data.ownerId == request.auth.uid ||
+        request.auth.uid in resource.data.authorizedContactUids
+      );
+      allow update: if request.auth != null && resource.data.ownerId == request.auth.uid;
+      allow delete: if false; // Audit retention
+    }
+    
+    // Journeys
+    match /journeys/{journeyId} {
+      allow create: if request.auth != null && request.resource.data.ownerId == request.auth.uid;
+      allow read: if request.auth != null && (
+        resource.data.ownerId == request.auth.uid ||
+        request.auth.uid in resource.data.authorizedContactUids
+      );
+      allow update, delete: if request.auth != null && resource.data.ownerId == request.auth.uid;
+    }
+    
+    // Verified Support Directory: Public read-only for verified entries
+    match /verified_support_directory/{entryId} {
+      allow read: if true;
+      allow write: if false; // Admin console only
+    }
+    
+    // Evidence Vault Metadata: Owner only
+    match /evidence_vault/{evidenceId} {
+      allow read, write, delete: if request.auth != null && resource.data.ownerId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.ownerId == request.auth.uid;
+    }
+  }
+}
